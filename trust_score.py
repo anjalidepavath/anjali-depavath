@@ -146,19 +146,16 @@ def calculate_trust_score(scores, weights):
 
     with tracer.start_as_current_span("calculate_trust_score"):
 
-        # Span 1 - Input Validation
         with tracer.start_as_current_span("input_validation") as span:
             validate_scores(scores)
             span.set_attribute("validation.status", "passed")
             span.set_attribute("metrics.count", len(scores))
 
-        # Span 2 - Weight Normalization
         with tracer.start_as_current_span("weight_normalization") as span:
             normalized_weights = normalize_weights(weights)
             span.set_attribute("weights.count", len(normalized_weights))
             span.set_attribute("weights.total", sum(normalized_weights.values()))
 
-        # Span 3 - Score Calculation
         with tracer.start_as_current_span("score_calculation") as span:
             trust_score = calculate_weighted_score(
                 scores,
@@ -170,7 +167,6 @@ def calculate_trust_score(scores, weights):
             span.set_attribute("trust.score", trust_score)
             span.set_attribute("risk.level", risk_level)
 
-        # Span 4 - Evidence Generation
         with tracer.start_as_current_span("evidence_generation") as span:
 
             evidence = generate_evidence(
@@ -182,7 +178,6 @@ def calculate_trust_score(scores, weights):
 
             span.set_attribute("evidence.fields", len(evidence))
 
-        # Span 5 - Hash Computation
         with tracer.start_as_current_span("hash_computation") as span:
 
             span.set_attribute("hash.algorithm", "SHA-256")
