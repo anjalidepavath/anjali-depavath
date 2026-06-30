@@ -44,3 +44,4 @@ All these steps are grouped under the parent span **calculate_trust_score**.
 * OpenTelemetry
 * Jaeger
 * Docker
+![alt text](image.png)
